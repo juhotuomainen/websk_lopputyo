@@ -1,0 +1,70 @@
+<!-- Sanakirjan sanojen näyttösivu. -->
+<!-- Yhdistelmäruutu, josta valitaan kieli joko kirjoittamalla sen nimi tai valitsemalla valmiista listasta. Se käyttää manuaalista valintaa eli valinta pitää kuitata Enterillä, jotta se on käytössä. -->
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<title> Sanakirjasovellus | aloitussivu </title>
+</heaad>
+<body>
+<div>
+<!-- Lähdekielen valitsemiseen tarkoitettu yhdistelmäruutu)
+<h1> Sanakirjasovellus</h1>
+<h2>Sanojen haku</h2>
+<label for="valitseLahdeKieli" id="valitseLahdekieli"
+class="combobox-label"
+>Valitse lähdekieli </label>
+
+<!-- Virallinen yhdistelmäruutu omassa divissään. Sen class-attribuutin arvo on combobox-wrapper, koska kyseessä on yhdistelmäruutu. -->
+<div class="combobox-wrapper">
+<!--  Määritetään uusi div-elementti, jonka role-attribuutin arvo on combobox, sillä edelleen käsitellään yhdistelmäruutua. -->
+<div role="combobox"
+aria-expanded="false"
+aria-owns="valitseKieliLista"
+aria-haspopup="listbox"
+id="valitseLahdekieliYhdistelmaruutu">
+<!-- varsinainen tekstisäädin, joka avautuu, jos käyttäjä kirjoittaa jotakin tekstikenttään. -->
+<imput type="text"
+<!-- Asetetaan auto-compolete -elementin arvoksi lista -->
+aria-autocomplete="list"
+aria-controls="valitseKieliLista"
+id="valitseLahdekieliTekstikentta">
+<!-- ul-elementti, joka ei näy ellei yhdistelmäruutu ole aktiivisena -->
+<ul aria-labelledby="valitseLahdekieli"
+role="listbox"
+id="valitsLahdekieliLista"
+class="listbox hidden" />
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Kohdekielen valitsemisyhdistelmäruutu. -->
+<label for="valitseKohdekieli" id="valitseLahdekieli"
+class="combobox-label"
+>Valitse kohdekieli </label>
+
+<!-- Virallinen yhdistelmäruutu omassa divissään. Sen class-attribuutin arvo on combobox-wrapper, koska kyseessä on yhdistelmäruutu. -->
+<div class="combobox-wrapper">
+<!--  Määritetään uusi div-elementti, jonka role-attribuutin arvo on combobox, sillä edelleen käsitellään yhdistelmäruutua. -->
+<div role="combobox"
+aria-expanded="false"
+aria-owns="valitseLahdekieliLista"
+aria-haspopup="listbox"
+id="valitseKohdekieliYhdistelmaruutu">
+<!-- varsinainen tekstisäädin, joka avautuu, jos käyttäjä kirjoittaa jotakin tekstikenttään. -->
+<imput type="text"
+<!-- Asetetaan auto-compolete -elementin arvoksi lista -->
+aria-autocomplete="list"
+aria-controls="valitseKohdekieliLista"
+id="valitseKohdekieliTekstikentta">
+<!-- ul-elementti, joka ei näy ellei yhdistelmäruutu ole aktiivisena -->
+<ul aria-labelledby="valitseKohdekieli"
+role="listbox"
+id="valitseKohdekieliLista"
+class="listbox hidden" />
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

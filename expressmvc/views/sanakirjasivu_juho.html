@@ -1,0 +1,104 @@
+<!-- Sanakirjan sanojen näyttösivu. Esimerkkiä on muokattu tilanteeseen sopivaksi osoitteesta https://www.w3.org/TR/wai-aria-practices/examples/combobox/aria1.1pattern/listbox-combo.html. -->
+
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<title> Sanakirjasovellus | aloitussivu </title>
+<!-- JavaScript-koodi, joka hakee sanan käyttäjän syöttämien ehtojen mukaan. -->
+<script type="text/javascript">
+// kontrolleritiedosto käyttöön
+const sanakirjaController = require(''./controllers/sanakirjaroute');
+// reitit käyttöön
+// sanakirjareitti käyttöön
+const sanakirjaroute = require('./routes/sajakirjaroute');
+// indeksireitti käyttöön:
+const index = require ('./routes/index');
+/* Jos hakukieli on Suomi,, etsitään englanninkielistä sanaa metodin searchWordEn-avulla.
+*/
+function haeSanaKayttoliittymaan(sana, (req, res) => {
+// Jos käyttäjän sana vastaa tietokannan Sana-taulun sana_fi-saraketta, palautetaan englanninkielinen tulos
+let sana = req.body.sana;
+if (req.body.sana === Sana.sana_fi)
+{
+// Palautetaan suomenkielinen sana.
+return sana.sana_en;
+}
+/* Jos hakukieleksi valittiin englanti, siinä eytsitään tekstiä suomeksi.*/
+if (req.body.sana === Sana.sana_en) {
+// palautetaan suomenkielinen sana takaisin
+return Sana.sana_fi && Sana.sanan_kuvaus_fi;
+}
+});
+</script>
+</head>
+<body>
+
+<!-- Lähdekielen valitsemiseen tarkoitettu yhdistelmäruutu) -->
+<h1>Sanakirjasovellus</h1>
+<h2>Sanojen haku</h2>
+<!-- <label-tagin for-attribuutti muutettiin, koska sen pitää viitata input-elementtiin. Sama virhe oli rivillä 43. -->
+<label for="valitseLahdekieliTekstikentta" id="valitseLahdekieli"
+class="combobox-label"
+>Valitse lähdekieli </label>
+
+<!-- Virallinen yhdistelmäruutu omassa divissään. Sen class-attribuutin arvo on combobox-wrapper, koska kyseessä on yhdistelmäruutu. -->
+<!--<div class="combobox-wrapper">
+<!--  Määritetään uusi div-elementti, jonka role-attribuutin arvo on combobox, sillä edelleen käsitellään yhdistelmäruutua. -->
+<div role="combobox"
+aria-expanded="true"
+aria-owns="valitseLahdekieliLista"
+aria-haspopup="listbox"
+id="valitseLahdekieliYhdistelmaruutu">
+<!-- varsinainen tekstisäädin, joka avautuu, jos käyttäjä kirjoittaa jotakin tekstikenttään. -->
+<input type="text"
+aria-autocomplete="list"
+aria-controls="valitseKohdekieliLista"
+id="valitseLahdekieliTekstikentta">
+</div>
+
+<!-- ul-elementti, joka ei näy ellei yhdistelmäruutu ole aktiivisena -->
+<ul aria-labelledby="valitseLahdekieliLista"
+role="listbox"
+id="valitseLahdekieliLista"
+class="listbox hidden">
+</ul>
+</div>
+
+
+
+<!-- Kohdekielen valitsemisyhdistelmäruutu. -->
+<label for="valitseKohdekieliTekstikentta" id="valitseKohdekieli"
+class="combobox-label"
+>Valitse kohdekieli </label>
+
+<!-- Virallinen yhdistelmäruutu omassa divissään. Sen class-attribuutin arvo on combobox-wrapper, koska kyseessä on yhdistelmäruutu. -->
+<div class="combobox-wrapper">
+<!--  Määritetään uusi div-elementti, jonka role-attribuutin arvo on combobox, sillä edelleen käsitellään yhdistelmäruutua. -->
+<div role="combobox"
+aria-expanded="false"
+aria-owns="valitseKohdekieliLista"
+aria-haspopup="listbox"
+id="valitseKohdekieliYhdistelmaruutu">
+<!-- varsinainen tekstisäädin, joka avautuu, jos käyttäjä kirjoittaa jotakin tekstikenttään. -->
+<input type="text"
+
+aria-autocomplete="list"
+aria-controls="valitseKohdekieliLista"
+id="valitseKohdekieliTekstikentta">
+</div>
+<!-- ul-elementti, joka ei näy ellei yhdistelmäruutu ole aktiivisena -->
+<ul aria-labelledby="valitseKohdekieli"
+role="listbox"
+id="valitseKohdekieliLista"
+class="listbox hidden">
+</ul> -->
+</div> 
+<label for:"sanahaku">Syötä haettava sana</label>
+<input type="text" />
+-<!! Painikkeet, joista vaihdetaan hakukieltä. -->
+<!-- Englanti -->
+<button onclick="haeSanaKayttoliittymaan()" type="submit" aria-label="Hakukieli englanti">Englanti</button>
+<!-- Suomen kieli -->
+<button onclick="haeSanaKayttoliittymaan()" type="submit" aria-label="Hakukieli suomi">Suomii</button>
+</body>
+</html>

@@ -1,0 +1,108 @@
+// otetaan passport käyttöön
+const passport = require('passport');
+
+// Googlen kirjautumismetodit sisältävä tiedosto googleController.js
+// Etusivun renderöinti
+exports.renderoiSivu = function (req, res) {
+// renderöidään index.ejs-sivu, johon käytetään res-muuttujan kautta kutsuttavaa render-metodia.
+res.render('../app/views/index.ejs');
+};
+// Profiilisivu, jossa on get-http -verbin kautta toimiva reitti. HUOM: tämä sivuon suojattu alimpaisena olevalla isLoggedIn-funktiolla.
+exports.renderoiProfiilisivu = function (req, res) {
+// Tulostetaan konsoliin pyynnön kautta ja isAuthenticated()-metodia hyödyntäen tieto siitä, onnistuiko käyttäjän tunnistus (true) vai menikö jotain pieleen (false). Tähän 
+console.log(rew.isAuthenticated());
+
+// Tulostetaan käyttäjän profiili konsoliin. Tiento pyynnön user-ominaisuudessa (property).
+tconsole.log(req.user);
+// Sessio-olion talletus sess-muuttujaan kirjoittamalle yhtäsuuruusmerkin vasemmalle puolelle sess ja oikealle puolelle req.session (pyynnön session-ominaisuus).
+let sess = req.session;
+// Renderöidään index.ejs-sivu selaimeen käyttäen pyynnön render-metodia ja antamalla sen parametriksi heittomerkeissä sivun nimi.
+res.render('profile.ejs', {
+
+// tallennetaan käyttäjä pyynnöstä templaattiin (avain user ja arvoksi pyynnön käyttäjä-ominaisuus).
+user: req.user,
+
+// Viedään session id templaattiin (avains ess ja arvo sess-muuttujan id-ominaisuus).
+sessid: sess.id,
+});
+};
+// Kirjautumisrdeitti, viedään moduuliin googleAuth
+exports.googleAuth = function(req, res) {
+passport.authenticate('google', {
+// olion parametrit
+scope: ['profile', 'email'],
+// päätetään ensin passport.authenticaten olio,, sitten kolmannen app.getin parametrin (eli samaisen metodin) suoritus kirjoittamalla loppusulku.
+}), function (req, res) {
+    if (!authed) {
+        // Generate an OAuth URL and redirect there
+        const url = oAuth2Client.generateAuthUrl({
+            access_type: 'offline',
+            scope: 'https://www.googleapis.com/auth/gmail.readonly'
+        });
+        console.log(url)
+        res.redirect(url);
+    } else {
+        const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+        gmail.users.labels.list({
+            userId: 'me',
+        }, (err, res) => {
+            if (err) return console.log('The API returned an error: ' + err);
+/* Tähän tulee passportilla tehty koodinpätkä, jossa kirjaudutaan sisään passportilla. */
+        //    const labels = res.data.labels;
+        //res.send('Logged in');
+		});
+		// Ongelma: rivillä 63 on odottamaton merkki ) eli loppusulku.
+};
+};
+
+// Käyttäjän Google-kirjautuminen (callbackToiminto). Se ohjaa käyttäjän onnistuneen kirjautumisen jälkeen eteenpäin ja tulostaa viestin myös kirjautumisen epäonnistuessa.
+exports.callbackToiminto = function (req, res) {
+// Käyttäjä tunnistetaan Google-tunnuksien asvulla.
+passport.authenticate('google', {
+// passport.authenticaten toisen parametrin (olion) avaimet ja arvot
+successRedirect: 'google',
+failureRedirect: '/',
+}),
+function (req, res) {
+    const code = req.query.code
+    if (code) {
+        // Haetaan pääsytoken, joka löytyy pyynnön kyselystä. Sen avulla päästään käsiksi sovellukseen.
+        oAuth2Client.getToken(code, function (err, tokens) {
+            if (err) {
+                console.log('Error authenticating')
+                console.log(err);
+            } else {
+                console.log('Successfully authenticated');
+                oAuth2Client.setCredentials(tokens);
+                authed = true;
+                res.redirect('/')
+            }
+        });
+    }
+};
+}
+
+// Uloskirjautumisreitti, viedään moduuliin logout.
+exports.logout = function (req, res) {
+	// uloskirjauksen ohjaus. Tässä kutsutaan pyynnön logout-metodia.
+req.logout();
+// ohjataan käyttäjä pääreittiin http-vastauksen redirect-metodin kutsulla.
+res.redirect('/');
+};
+// issLoggedIn-funktio, joka tutkii, onko käyttäjä kkirjautunut sisään.
+function isLoggedIn(req, res, next) {
+    // Tulostetaan tieto käyttäjän tunnistautumisesta konsoliin käyttäen pyynnön isAuthenticated-metodia.
+console.log(req.isAuthenticated());
+// Jos käyttäjä tunnistautunut oikein (eli pyynnön isAuthenticated-metodin palauttama totuusarvo on true), mennään eteenpäin.
+if (req.isAuthenticated()) {
+// mennään eteenpäin kutsumalla next-metodia
+return next();
+}
+// Muutoin ohjataan käyttäjä etusivulle.
+else {
+res.redirect('/');
+}
+}
+}
+
+

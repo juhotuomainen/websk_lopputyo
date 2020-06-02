@@ -1,0 +1,46 @@
+<!-- Sanakirjan sanojen näyttösivu. Esimerkkiä on muokattu tilanteeseen sopivaksi osoitteesta https://www.w3.org/TR/wai-aria-practices/examples/combobox/aria1.1pattern/listbox-combo.html. -->
+
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<title> Sanakirjasovellus | aloitussivu </title>
+<!-- JavaScript-koodi, joka hakee sanan käyttäjän syöttämien ehtojen mukaan. -->
+<script type="text/javascript">
+// kontrolleritiedosto käyttöön
+const sanakirjaController = require(''./controllers/sanakirjaroute');
+// reitit käyttöön
+// sanakirjareitti käyttöön
+const sanakirjaroute = require('./routes/sajakirjaroute');
+// indeksireitti käyttöön:
+const index = require ('./routes/index');
+/* Jos hakukieli on Suomi,, etsitään englanninkielistä sanaa metodin searchWordEn-avulla.
+*/
+function haeSanaKayttoliittymaan(sana, (req, res) => {
+// Jos käyttäjän sana vastaa tietokannan Sana-taulun sana_fi-saraketta, palautetaan englanninkielinen tulos
+let sana = req.body.sana;
+if (req.body.sana === Sana.sana_fi)
+{
+// Palautetaan suomenkielinen sana.
+return sana.sana_en;
+}
+/* Jos hakukieleksi valittiin englanti, siinä eytsitään tekstiä suomeksi.*/
+if (req.body.sana === Sana.sana_en) {
+// palautetaan suomenkielinen sana takaisin
+return Sana.sana_fi && Sana.sanan_kuvaus_fi;
+}
+});
+</script>
+</head>
+<body>
+
+<!-- Lähdekielen valitsemiseen tarkoitettu yhdistelmäruutu) -->
+
+<label for:"sanahaku">Syötä haettava sana</label>
+<input type="text" id ="sanahaku" />
+<!-- Painikkeet, joista vaihdetaan hakukieltä. -->
+<!-- Englanti -->
+<button onclick="haeSanaKayttoliittymaan()" type="submit" aria-label="Hakukieli englanti">Englanti</button>
+<!-- Suomen kieli -->
+<button onclick="haeSanaKayttoliittymaan()" type="submit" aria-label="Hakukieli suomi">Suomii</button>
+</body>
+</html>
