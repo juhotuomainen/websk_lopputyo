@@ -7,7 +7,8 @@
 // MySQL kayttoon
 let mysql =require('mysql');
 // yhteysolio. Tallennetaan tiedot olioon ja tehdään yhteys paikalliselle tiesokantapalvelimelle ('localhost'). Lisaksi syotetaan kayttajatunnus, salasana ja tietokanta ('nodesk').
-let yhteys = mysql.createConnection({
+const yhteys = {
+mysql.createConnection({
 host: 'localhost',
 user: 'root',
 password: '',
@@ -35,5 +36,5 @@ const port = process.env.PORT || 3000;
 app.listen (port, () => { 
 console.log('Palvelin käynnissä portissa ' + port + '.')
 });
-// viedaan moduuli yhteys-moduuli eteenpain
-}
+};
+module.exports = yhteys;

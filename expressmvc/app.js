@@ -6,7 +6,8 @@ const http = require('http');
 
 const server = http.createServer(function (req, res) {
 // Otetaan html-moottori käyttöön kutsumalla engine-funktiota app-olion kautta. Parametrina sulkujen sisässä annetaan  merkkijono html (eli html-tiedostotarkennin) sekä renderFile-metodin kutsu, joka on toinen app.enginen parametri. En ole varma tämän rivin sijaintipaikasta...
-app.engine('html', ejs.renderFile);
+app.engine('html',
+require(ejs).renderFile);
 // Laitetaan tekstimuodossa headerit eli niiden tulee olla tekstiä
 // testimuuttuja, joka kommentoidaan pois kun se jää tarpeettomaksi. Sillä testataan, että palvelin toimii edes jotenkin.
 const body = 'Terve mualima!';
