@@ -1,28 +1,56 @@
-// http käyttöön
-const http = require('http');
-// otetaan ejs-tiedostomoduuli käyttöön requirella. Sen avulla renderöidään html-sivua. Apua tehtävän tekooon otettu tässä kohdassa osoittedesta https://stackoverflow.com/questions/4529586/render-basic-html-view.
-//const ejs = require('ejs); 
-// Varsinbainen http-serverin luonti tapahtuu luomalla muuttuja server ja talolentamalla tiedot siihen.
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
-const server = http.createServer(function (req, res) {
-// Otetaan html-moottori käyttöön kutsumalla engine-funktiota app-olion kautta. Parametrina sulkujen sisässä annetaan  merkkijono html (eli html-tiedostotarkennin) sekä renderFile-metodin kutsu, joka on toinen app.enginen parametri. En ole varma tämän rivin sijaintipaikasta...
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+// sanakirjareitti käyttöön, tieto muuttujassa sanakirjarouter.
+//const sanakirjarouter = require('./routes/sanakirjaroute');
+var app = express();
+// ejs-moduuli käyttöön
+//const js = require('ejs');
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 app.engine('html',
-require(ejs).renderFile);
-// Laitetaan tekstimuodossa headerit eli niiden tulee olla tekstiä
-// testimuuttuja, joka kommentoidaan pois kun se jää tarpeettomaksi. Sillä testataan, että palvelin toimii edes jotenkin.
-const body = 'Terve mualima!';
-/* Kutsutaan setHeaders-funktiota res-olionkautta. Annetaan parametriksi sulkujen sisään heittomerkeissä sisällön pituus-attribuutti (content-length) ja toiseksi parametriksi body.length eli body-olion  (dataosan "rungon" sisältävä  olio") mitta.*/
-res.setHeaders('content-Length', 'body.length');
-/* Tehdään sama kuinedellä (kutsutaan uudelleen setHeaders-funktiota res-olion kautta), mutta ensimmäisenä parametrina tällä kertaa heittomerkeissä sisällön tyyppi (Content-Type) ja toisena parametrina heittomerkkien sisässä merkkijono text/plain eli kyseessä on puhdas tekstityyppi. */
-res.setHeaders('Content-Type', 'text/plain');
-// Lopetetaan res-olion kautta kutsutun body-olion täyttäminen kutsumalla end-metodia res-olion kautta (res.end) ja antamalla sille parametriksi body.
-res.end(body);
-});
-/* kuunnellaan porttia 3001 kutsumalla listen metodia server-muuttujan kautta. Tehdään niin, että ensin server.listen-metodin kutsuun laitetaan sulkujen sisälle 3001, pilkku, väli ja sitten anonyymi callback-funktio, joka tulostaa tiedon palvelimen käynnistymisestä konsoliin.*/
-/*catch((Error) => {
-// tulostetaan virhe konsoliin.
-console.log('Yhteydenotossa tapahtui virhe. Syy oli' + Error);});*/
+require('ejs').renderFile);
 
-server.listen(3001, () => {
-console.log('Palvelin käynnissä portissa 3001.');
+// reittien maarittely
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+// reittejä käyttöön app.usella
+// ensiksi perusreitti (express-generaattorin luoma, indeksireitti)
+app.use('/', indexRouter);
+// sitten käyttäjäreitti (myös express-generaattorin luoma)
+app.use('/users', usersRouter);
+// sanakirjareitti käyttöön. Ensin heittomerkeissä reitti ja sitten sanakirjaroute-muuttujan nimi.
+//app.use('/sanakirja', sanakirjarouterRouter);
+
+// Kuunnellaan pyyntoja. Tassa hyodynnetaan listen-metodia, jolle valitetaan parametrina portti seka kalback-nuolifunktio, joka tulostaa portin konsoliin.
+app.listen(3000,  () => {
+// Tulostetaan viesti konsoliin kayttaen console.log:ia.
+console.log('Palvelin käynnissä portissa 3000.');
 });
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;

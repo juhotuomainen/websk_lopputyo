@@ -29,6 +29,15 @@ if (req.body.sana === Sana.sana_en) {
 return Sana.sana_fi && Sana.sanan_kuvaus_fi;
 }
 });
+// Luodaan tapahtuma, jossa sana vastaanotetaan palvelimelta. Se tehdään kutsumalla tapahtumaa onö-metodin kautta.
+datanLahetysServeriltaKayttoliittymaan.on('datanLahetysServeriltaKayttoliittymaan', (sana) => {
+            /* haetaan elementti, jonka ID sanahaku ja kirjoitetaan  siihen (INNER HTML eli tagien, tässä tapauksessa input-e'lementin, sisään). Tieto tästä laitetaan inner HTML--metodin (teksti tagin sisään). Kirjoitetaan ensin document.getElementById, sitten sulkujen sisään heittomerkeissä etsittävä merkkijono eli id ja inner HTML-sanojen jälkeen yhtäsuuruusmerkki. Sen jälkeen kirjoitetaan sana-muuttujan nimi.*/
+docunent.getElmentById('sanahaku').innerHTML = sana;
+/* Tallennetaan sana nykyinenSana-muuttujaan, jotta sitä voi kutsua myöhemmin. Tieto tästä tallennetaan let-avainsanalla  muodostettuun nykyinenSana-muuttujaan. Tämä tehdään, jotta nykyinenSana-muuttujan arvo voi muuttua vapaasti ajon  aikana. Tässä ei ole huomioitu mitenkään sanan validointia esimerkiksi säännöllisen lausekkeen  avulla.*/
+let nykyinenSana = sana; 
+});
+/* Kutsutaan äsken luotua funktiota käyttöliittymässä, jotta se osaa käyttää funktiota datanLahetysPalvelimeltaKayttoliittymaan oikein. Se tehdään kutsumalla Events-luokan/olion emit-metodia ja antamalla sulkujen sisässä heittomerkeissä funktion nimi (eli datanLahetysPalvelimeltaKayttoliittymaan). */
+datanLahetysPalvelimeltaKayttoliittymaan.on('datanLahetysPalvelimeltaKayttoliittymaan');
 </script>
 </head>
 <body>
