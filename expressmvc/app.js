@@ -7,16 +7,15 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 // sanakirjareitti käyttöön, tieto muuttujassa sanakirjarouter.
-//const sanakirjarouter = require('./routes/sanakirjaroute');
+const sanakirjarouter = require('./routes/sanakirjaroute');
 var app = express();
-// ejs-moduuli käyttöön
-//const js = require('ejs');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.engine('html',
-require('ejs').renderFile);
-
+app.set('view engine', 'ejs');
+//app.engine('html',
+//require(ejs).renderFile);
+//app.disable('etag');
 // reittien maarittely
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,14 +28,7 @@ app.use('/', indexRouter);
 // sitten käyttäjäreitti (myös express-generaattorin luoma)
 app.use('/users', usersRouter);
 // sanakirjareitti käyttöön. Ensin heittomerkeissä reitti ja sitten sanakirjaroute-muuttujan nimi.
-//app.use('/sanakirja', sanakirjarouterRouter);
-
-// Kuunnellaan pyyntoja. Tassa hyodynnetaan listen-metodia, jolle valitetaan parametrina portti seka kalback-nuolifunktio, joka tulostaa portin konsoliin.
-app.listen(3000,  () => {
-// Tulostetaan viesti konsoliin kayttaen console.log:ia.
-console.log('Palvelin käynnissä portissa 3000.');
-});
-
+app.use('/sanakirja', sanakirjarouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -51,6 +43,9 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+app.listen(3000, () => {
+    console.log("Server is listening on port 3000");
 });
 
 module.exports = app;
