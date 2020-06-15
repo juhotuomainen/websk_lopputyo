@@ -3,7 +3,7 @@ const yhteys = require('../config/database_config');
 // Sanakirjan kontrolleri-tiedosto
 // testiasioita varten tehty "Hae kaikki sanat" -toiminto (metodi.
 exports.searchAll = (req, res) => {
-/* Palautetaan SQL-kyselym hossa. Palautetaan conn-olion query-ominaisuudelle tehty kysely, joka annetaan conn.querylle parametreina sulkujen sisässä ja heittomerkeissä. Toisena parametrina callback eli takaisinkutsufunktio. Tieto tästä sijaitsee let-avainsanalla sijaitsevassa kysely-muuttujassa. */
+/* Palautetaan SQL-kyselym hossa. Palautetaan conn-olion query-ominaisuudelle tehty kysely, joka annetaan conn.querylle parametreina sulkujen sisässä ja heittomerkeissä. Toisena parametrina callback eli takaisinkutsufunktio. Tieto tästä sijaitsee let-avainsanalla aiemmin alustetussa yhteys-muuttujassa. Ensimmäinen yhteys-olion query-funktiolle annettavista parametreista on tekstimuotoinen SQL-lause, jonka SQL-kyselylausekkeessa on kysymysmerkki (?) oikean arvon tilalla, mikä parantaa vain hieman sovelluksen tietoturvaa. Muiden funktioiden kyselyt ontoteutettu samalla tavalla. */
 yhteys.query('SELECT * FROM Sana', (error, result) => {
 if (error){
 res.status(500).send('There was an error!');
@@ -24,7 +24,7 @@ console.log(error);
 /* Lähetetään http-koodi 500 res-olion status-funktio hyödyntäen. Se ketjutetaan send-metodille, jonka parametriksi annetaan heittomerkkien sisään oma virheviesti. */
 res.status(500).send('Suomenkielistä sanaa haettaessa tapahtui virhe!' + error);
 } else {
-// palautetaan tyhjä olio. tieto tästä tallennetaan tulos-muuttujaan
+// palautetaan tyhjä olio. Tieto tästä tallennetaan const-avainsanalla alustettuun tulos-muuttujaan.
 const tulos = {};
 if(result.length > 0) {
 tulos.sana = result[0].sanan_nimi_en;

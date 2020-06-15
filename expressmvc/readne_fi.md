@@ -1,6 +1,49 @@
 # Erittäin yksinkertainen sanakirja-sovellus
 ## Yleiskuvaus sovelluksesta
-Tämä sovellus on erittäin yksinkertainen sanakirjasovellus, joka on samalla Web-sovelluskehitys 1 -kurssin lopputyö. Alun perin sovellukseen oli tarkoitus tehdä suojattu käyttöliittymä, mutta kurssien tehtävissä ilmenneiden ongelmien ja niiden haasteellisuuden vuoksi tein sovellukseen vain välttämättömimmät toiminnot eli sanojen lisäyksen, päivityksen ja poiston sekä kaikkien sanojen haun ja sanojen hakemisen sekä suomeksi että englanniksiSovellus näyttää sanoista tällä hetkellä vain nimen (itse sanan, kuten tuli tai fire) ja kuvauksen (kuten "Palamisprosessi, jonka seurauksena syntyy tuhkaa."). Sovellus on niin sanottu MVC-sovellus (Model View Control), mikä tarkoittaa sitä, että siinä ei ole erillistä, toiselta palvelimelta ladattavaa käyttöliittymää vaan käyttöliittymänä toimivat .ejs-sivut (EJS tulee sanoista Embedded JavaScript eli sulautettu javaScript, jota kirjoitetaan html:n sekaan .ejs-tiedostoon). Sovelluksen oli alun perin tarkoitus toimia MongoDB-tietokannan päällä,mutta ongelmien vuoksi tietokannaksi vaihdettiin SQL-tietokanta. Lisäksi sovelluksessa on erittäin yksinkertainen REST API eli rajapinta, joka tarjoaa erittäin alkeelliset ja yksinkertaiset toiminnot sovelluksen käyttöön. Sanakirjan toimintoja ovat tällä hetkellä sanojen poisto, lisäys, päivitys sekä niiiden hakeminen (ks. kohta "Sovelluksen käyttö" alempana). Sovellus toimii tällä hetkellä vain paikallisesti, joten se pitää kloonata eli asentaa Git-versionhallintajärjestelmää käyttäen (ks. ohjeet alempana).
+Tämä sovellus on erittäin yksinkertainen sanakirjasovellus, joka on samalla Web-sovelluskehitys 1 -kurssin lopputyö (oletan, että saan kurssista arvosanan 1 tämän työn avulla). Alun perin sovellukseen oli tarkoitus tehdä suojattu, Google-kirjautumisen vaativa käyttöliittymä, mutta kurssien tehtävissä ilmenneiden ongelmien ja niiden haasteellisuuden vuoksi tein sovellukseen vain välttämättömimmät toiminnot eli sanojen lisäyksen, päivityksen ja poiston sekä kaikkien sanojen haun ja sanojen hakemisen sekä suomeksi että englanniksi. Sovellus näyttää sanoista tällä hetkellä vain nimen (itse sanan, kuten tuli tai fire) ja kuvauksen (kuten "Palamisprosessi, jonka seurauksena syntyy tuhkaa."). Sovellus on niin sanottu MVC-sovellus (Model View Control), mikä tarkoittaa sitä, että siinä on vain mallit (models), näkymät (views) ja kontrollerit (controllers), eikä siinä ole erillistä, toiselta palvelimelta ladattavaa käyttöliittymää. Käyttöliittymänä toimivat .ejs-sivut (EJS tulee sanoista Embedded JavaScript eli sulautettu javaScript, jota kirjoitetaan html:n sekaan .ejs-tiedostoon). Muita ohjelmointikieliä EJS:n lisäksi ovat JavaScript (lähes koko sovellus) ja SQL (pelkkää SQL:ää vain luontilauseissa, mysql-moduulin kautta tapahtuvaa tietokannan käsittelyä kontrolleritiedostossa sanaakirja_controller.js). Sovelluksen oli alun perin tarkoitus toimia MongoDB-tietokannan päällä,mutta ongelmien vuoksi tietokannaksi vaihdettiin SQL-tietokanta. Lisäksi sovelluksessa on erittäin yksinkertainen REST API eli rajapinta, joka tarjoaa erittäin alkeelliset ja yksinkertaiset toiminnot sovelluksen käyttöön. Sanakirjan toimintoja ovat tällä hetkellä sanojen poisto, lisäys, päivitys sekä niiden hakeminen (ks. kohta "Sovelluksen käyttö" alempana). Sovellus toimii tällä hetkellä vain paikallisesti, joten se pitää kloonata eli asentaa Git-versionhallintajärjestelmää käyttäen (ks. ohjeet alempana).
+
+## Sovelluksen kansiorakenne
+Sanakirja-sovelluksen kansiorakenne on seuraava (huomaa, että tähtimerkki (*) tiedoston tai kansion edessä tarkoittaa sitä, että se syntyy vasta sovelluksen asennuksen jälkeen):
+- Päätaso (git-puun juuri kansiossa, johon sovellus on asennettu): 
+ - expressmvc, joka sisältää sovelluksen toiminnan kannalta tärkeät kansiot ja tiedostot
+  
+  - bin-kansio (asennuksen jälkeen tulevat binääritiedostot): 
+   - * www: web-palvelimeen käynnistykseen liittyviä asioita (kuten nodemon-moduulin käynnistys)
+  - config-kansio (asetustiedostot):  
+   - database_config.js: Yhteydenotto SQL-tietokantaan
+  - Controllers-kansio (sovelluksen kontrollerit eli funktiot, joita käytetään, edellisessä osiossa ("Yleiskuvaus sovelluksesta" kuvattujen toimintojen suorittamiseen):
+   - googleControllerjs.txt: Alun perin Google-kirjautumisen hoitava kontrolleri, joka jätettiin hyödyntämättä.. Siksi senkoodi on tässä sovelluksessa txt-versiona vain sen vuoksi, että nähdään, mitä olen yrittänyt tehdä sovellusta kehittäessäni
+   - sanakirja_controller.js: Sanakirjan kontrolleritiedosto
+  - Models-kansio (sisältää vanhat, käyttämättömiksi osoittautuneet tietokantamallit, kun tietokanta vaihdettiin haasteiden vuoksi MongoDB:stä MySQL:ään):
+   - sanakirja_tietokantamalli.js: Sanakirjan MOngoDB-tietokantamalli
+  - * Node_modules-kansio (sisältää kaikki NodeJS:n tarvitsemat moduulit, jotta sovellus toimisi oikein)
+  - Public (sisältää julkisia, yleisiä tiedostoja): 
+   - images (kuvat, tällä hetkellä tyhjä)
+   - Javascripts (Yleiset JavaScript-tiedostot, tällä hetkellä tyhjä)
+   - stylesheets (CSS (Cascading Style Sheet) -tyylitiedostot, joilla muokataan sivun ulkoasua)
+    - styles.css: sisältää sovelluksen tyylit eli ulkoasun
+  - routes-kansio (sovelluksen reitit eli tiedostot, ojoissa määritellään, miten tieto kulkee sovelluksessa palvelimelta eteenpäin):
+   - index.js: Sovelluksen perusreitti, jota käytetään vain testaamiseen. Tulostaa Express.sovelluskehyksen tervetulosivun ("Welcome to Express").
+   - sanakirjaroute.js: Sanakirjan-sovelluksen kaikki perusreitit ja niitä käsittelevät callbackit (eli parametreina välitettävät funktiot) sisältävä tiedosto
+   - users.js: Sanakirjan-sovelluksen käyttäjien reitit ja niitä käsittelevät callbackit (eli parametreina välitettävät funktiot) sisältävä tiedosto
+  - views-kansio (sisältää sanakirjan näkymät eli sovelluksen sivut)
+   - error.ejs: virhesivu, joka näytetään virhetilanteessa
+   - hakutulossivu.ejs: vanha versio sivusta, joka näytetään käyttäjän haettua sanaa joko englanniksi tai suomeksi
+   - lisayssivu.ejs: sivu, joka näytetään sanaa lisättäessä
+   - paivityssivu.ejs: sivu, joka näytetään sanaa päivitettäessä
+   - poistosivu.ejs: sivu, joka näytetään tiedostoa poistettaessa
+   - sanakirja.ejs: sivu, joka näytetään sanaa haettaessa
+   - sanakirjasivu.ejs: Sanakirjan hakusivun vanhempi vewrsio (vain oppimisprosessin kuvaustarkoituksena)
+   - sanakirjasivu_juho.html: sanakirjasivu-näkymän vanhempi html-versio, jossa on myös JavaScript-koodia erillisessä script-elementissä ja saavutettavan yhdistelmäruudun yritelmä, joka ei kuitenkaan toiminut. Tiedosto on siis mukana vain oppimisprosessin kuvausta varten.
+   - tulossivu.ejs: sivu, joka näytetään käyttäjän haettua sanaa joko englanniksi tai suomeksi
+  - App.js: Sovelluksen päätiedosto (sisältää kaikki sovelluksen käynnistykseen ja toimintaan liittyvät ydinasiat, kuten muuttujien alustuksen ja sovelluksen käynnistämisen app-olion kautta kutsuttavan listen-metodin avulla)
+  - pagkage.json: JSON (JavaScript Object Notation) -muotoinen tiedosto, joka sisältää Sanakirja-web-sovelluksen kannalta tärkeimmät NodeJS-kirjaston moduulit.
+  - * Package.json: JSON (JavaScript Object Notation) -muotoinen tiedosto, joka sisältää tiedon asennetuista NodeJS:n moduuleista
+  - reademe_fi.md: Tämä ohjetiedosto, joka sisältää tietoja sovelluksesta, sen käytöstä ja asennuksesta.
+  - sanakirja.sql: Sanakirja-sovelluksen luontiin tarkoitettu testititietokanta (Sisältää kaksi käyttäjää, kaksi käyttäjille määriteltyä roolia (perus- ja admin-käyttäjä) ja yhden sanakirjan (Suomi-englanti-sanakirja), jossa on neljä sanaa (tuli/fire, vesi/water, koira/dog ja kissa/cat).
+  - tietokannan_tekoskripti.js: Vanha, käytöstä poistunut MongoDB-tietokantamalli (vastaa SQL:n relaatietietokantamallia), jossa asioiden välillä on suhde.
+ - .gitignore: sisältää tiedostot ja kansiot, joita Git ei ota mukaan versionhallintaan.
+
 
 ## Sovelluksen asennus
 Huomautus: Koska sovellus on testattu ja todettu toimivaksi Windowsilla (Windows 10 Professional, 64-vittinen, versio 10.0.18362.890)), ohje on tehty Windowsin käyttäjän ( ja myös ruudunlukuohjelman käyttäjän) näkökulmasta. Linuxin ja MAC OS:n käyttäjien pitäisi kuitenkin pystyä asentamaan sovellus, kun heidän koneissaan on ensin NodeJS:n ja XAMPP:n versiot kyseiselle käyttöjärjestelmälle (siis MAC OS tai Linux-versio).
@@ -47,7 +90,7 @@ Tämä sovellus on tarkoitettu vain arviointi- ja testikäyttöön, minkä vuoks
 Käyttäjä saa asentaa yhden (1) kopion sovelluksesta tietokoneelleen ja käyttää sitä vain sovelluksen testaamiseen, henkilökohtaiseen eikä mihinkään kaupalliseen käyttöön. 
 
 §2.3. Käyttäjän oikeuksien rajoitukset
-Käyttäjä ei saa muokata sovellusta millään tavalla eikä levittää sitä etenpäin ilman oppilaan kirjallista suostumusta. Hän ei saa myöskään enepää kuin yhden kopion konelleen tai palvelimelle, johon sovellus ja sen vaatima ympäristö on asennettu. 
+Käyttäjä ei saa muokata sovellusta millään tavalla eikä levittää sitä eteenpäin ilman oppilaan kirjallista suostumusta (poikkeuksena tähän on sanakirjasivu_juho.html-sivun yhdistelmäruuduissa ollut kooodi, jota koskevat omat lisenssiehdot ja jotka löytyvät, kun käyttäjä avaa tiedoston (polku päähakemistosta katsottuna: .\expressmvc\views\sanakirjasivu_juho.html). Hän ei saa myöskään enepää kuin yhden kopion konelleen tai palvelimelle, johon sovellus ja sen vaatima ympäristö on asennettu. 
 
 §4. Tekijänoikeudet
-Tämän teoksen tekijänoikeudet omistaa Juho Tuomainen. Tekijänoikeudet (C) 2020 Juho Tuomainen. Kaikki oikeudet pidätetään.
+Tämän teoksen tekijänoikeudet omistaa Juho Tuomainen. Tekijänoikeudet (C) 2020 Juho Tuomainen. Kaikki oikeudet pidätetään ellei toisin mainita.
