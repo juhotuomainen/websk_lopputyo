@@ -15,11 +15,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 //app.engine('html',
 //require(ejs).renderFile);
-//app.disable('etag');
 // reittien maarittely
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // reittejä käyttöön app.usella
@@ -30,6 +29,7 @@ app.use('/users', usersRouter);
 // sanakirjareitti käyttöön. Ensin heittomerkeissä reitti ja sitten sanakirjaroute-muuttujan nimi.
 app.use('/sanakirja', sanakirjarouter);
 // catch 404 and forward to error handler
+
 app.use(function(req, res, next) {
   next(createError(404));
 });
@@ -44,6 +44,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });

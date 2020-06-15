@@ -1,0 +1,27 @@
+<!-- Sanakirjan sanojen näyttösivu. Esimerkkiä on muokattu tilanteeseen sopivaksi osoitteesta https://www.w3.org/TR/wai-aria-practices/examples/combobox/aria1.1pattern/listbox-combo.html. -->
+
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<title> Sanakirjasovellus | Sanan päivitys </title>
+</head>
+<body>
+<% if (locals.message) { %>
+<p><%=locals.message %></p>
+<% } %>
+<h2>Sanan päivitys</h2>
+<form method="POST" action="./paivitasana">
+Päivitettävä sana<br>
+<input type="text" name="sana" required><br>
+Sana suomeksi<br>
+<input type="text" name="sanafi" required><br>
+Sana englanniksi<br>
+<input type="text" name="sanaen" required><br>
+Sanan kuvaus suomeksi<br>
+<input type="text" name="kuvausfi" required><br>
+Sanan kuvaus englanniksi<br>
+<input type="text" name="kuvausen" required><br>
+<input type="submit" value="Päivitä sana">
+</form>
+</body>
+</html>
