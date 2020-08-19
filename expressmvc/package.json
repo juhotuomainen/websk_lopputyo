@@ -1,13 +1,19 @@
 {
-    "name": "MyWebSite",
-    "description": "My website",
+    "name": "expressmvc",
+    "description": "Yksinkertainen sanakirjasovellus ja Web-sovelluskehitys -kurssin lopputyo",
+    "main": "app.js",
     "version": "0.0.1",
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "author": "Juho Tuomainen",
+  "license": "ISC",
     "dependencies": {
         "cookie-parser": "^1.4.5",
         "ejs": "^3.1.3",
         "express": "4.x",
-        "jade": "^1.11.0",
         "morgan": "^1.10.0",
-        "mysql": "^2.18.1"
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.2"
     }
 }

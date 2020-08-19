@@ -14,8 +14,6 @@ Sanakirja-sovelluksen kansiorakenne on seuraava (huomaa, että tähtimerkki (*) 
   - Controllers-kansio (sovelluksen kontrollerit eli funktiot, joita käytetään, edellisessä osiossa ("Yleiskuvaus sovelluksesta" kuvattujen toimintojen suorittamiseen):
    - googleControllerjs.txt: Alun perin Google-kirjautumisen hoitava kontrolleri, joka jätettiin hyödyntämättä.. Siksi senkoodi on tässä sovelluksessa txt-versiona vain sen vuoksi, että nähdään, mitä olen yrittänyt tehdä sovellusta kehittäessäni
    - sanakirja_controller.js: Sanakirjan kontrolleritiedosto
-  - Models-kansio (sisältää vanhat, käyttämättömiksi osoittautuneet tietokantamallit, kun tietokanta vaihdettiin haasteiden vuoksi MongoDB:stä MySQL:ään):
-   - sanakirja_tietokantamalli.js: Sanakirjan MOngoDB-tietokantamalli
   - * Node_modules-kansio (sisältää kaikki NodeJS:n tarvitsemat moduulit, jotta sovellus toimisi oikein)
   - Public (sisältää julkisia, yleisiä tiedostoja): 
    - images (kuvat, tällä hetkellä tyhjä)
@@ -41,7 +39,6 @@ Sanakirja-sovelluksen kansiorakenne on seuraava (huomaa, että tähtimerkki (*) 
   - * Package.json: JSON (JavaScript Object Notation) -muotoinen tiedosto, joka sisältää tiedon asennetuista NodeJS:n moduuleista
   - reademe_fi.md: Tämä ohjetiedosto, joka sisältää tietoja sovelluksesta, sen käytöstä ja asennuksesta.
   - sanakirja.sql: Sanakirja-sovelluksen luontiin tarkoitettu testititietokanta (Sisältää kaksi käyttäjää, kaksi käyttäjille määriteltyä roolia (perus- ja admin-käyttäjä) ja yhden sanakirjan (Suomi-englanti-sanakirja), jossa on neljä sanaa (tuli/fire, vesi/water, koira/dog ja kissa/cat).
-  - tietokannan_tekoskripti.js: Vanha, käytöstä poistunut MongoDB-tietokantamalli (vastaa SQL:n relaatietietokantamallia), jossa asioiden välillä on suhde.
  - .gitignore: sisältää tiedostot ja kansiot, joita Git ei ota mukaan versionhallintaan.
 
 
@@ -62,6 +59,8 @@ Lisäksi XAMPP-ohjelmistosta tulee olla käåynnistettyinä Apache- ja MySQL-pal
 - Luo kansio, johon haluat asentaa ohjelman (esimerkiksi websk_lopputyo).
 - Siirry luomaasi kansioon cd-komennolla (esimerkissä "cd websk_lopputyo).
 - Kloonaa git varasto (repository) komennolla git clone https://github.com/juhotuomainen/websk_lopputyo.git
+- tarkista dir-komennolla, asentuiko kansioon mitään kirjoittamalla pelkkä komennon nimi.
+- Siirry expressmvc-kansioon cd-komennolla kirjoittamalla cd expressmvc. Kun olet siirtynyt tähän kansioon, asennusohjelma asentaa tiedostot oikealla tavalla.
 - Asenna ohjelmistot kirjoittamalla komentokehotteessa komento "npm install". Tämän komennon pitäisi asentaa kaikki ohjelmistot (lista package.json-tiedostossa), jotka tarvitaan ohjelman toimimiseksi.
 - Aja eli suorita testitietokannan luontiin tarkoitettu sql-tiedosto avaamalla toinen komentokehote. Jos olet määritellyt MySQL-palvelimen (MariaDB) hakemiston ympäristömuuttujaan eli siten, että voit käynnistää sovelluksen mistä tahansa, kirjoita vain mysql -u käyttäjänimi -p salasana (korvaa "käyttäjänimi" ja "salasana" tietokantasi tiedoilla; Oletuksena käyttäjänimi on root ja salasanaa ei ole). 
  - Jos et ole määritellyt mysql:iä käynnistymään mistä tahansa, mene ensin XAMPPin hakemistoon komentokehotteessa cd-komennolla (oletuksena "c:\xampp") ja sitten samalla komennolla kansioon "mysql" ("cd mysql"). Paina Enteriä. Kirjoita sitten "Mysql -u käyttäjänimi -p salasana" -komento.

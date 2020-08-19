@@ -46,7 +46,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(3000, () => {
-    console.log("Server is listening on port 3000");
+    console.log('Palvelin käynnissä portissa 3000.');
 });
 
 module.exports = app;
