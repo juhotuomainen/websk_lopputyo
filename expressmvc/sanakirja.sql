@@ -3,8 +3,6 @@ CREATE DATABASE IF NOT EXISTS Sanakirja;
 -- Käytetään Sanakirja-tietokantaa USE-lausekkeella.
 USE Sanakirja;
 -- Taulujen tuhoamislauseet
-DROP TABLE IF EXISTS Kayttajatili;
-DROP TABLE IF EXISTS Rooli;
 DROP TABLE IF EXISTS Sana;
 DROP TABLE IF EXISTS Sanakirja;
 
@@ -23,37 +21,14 @@ sanan_nimi_en VARCHAR(100) NOT NULL,
 sanan_kuvaus_fi VARCHAR(100) NOT NULL,
 sanan_kuvaus_en VARCHAR(100) NOT NULL)
 ENGINE=INNODB;
-
--- Tehdään taulukko Rooli. Sen sarakkeita ovat Rooli, nimi ja viiteavainsarake Kayttajatili, joka viittaa Kayttaja-tili-taulun Kayttajatili-sarakkeeseen */
-CREATE TABLE Rooli(
-rooli INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-Nimi VARCHAR(20) NOT NULL
-)ENGINE=INNODB;
-
-/* Tehdään taulu Kayttajatili. Sen sarakkeita ovat Kayttajatili (tietotyyppi kokonaisluku ja automaattisesti juokseva), Kayttajatunnus (tietotyyppi VARCHAR ja maksimipituus 30 merkkiä), Salasana (tietotyyppi varchar ja maksimipituus 44 merkkiä) sekä Rooli (viiteavainsarake, joka viittaa Rooli-taulun Rooli-perusavainsarakkeeseen).*/ 
-CREATE TABLE Kayttajatili(
-kayttajatili INT PRIMARY KEY AUTO_INCREMENT,
-kayttajatunnus VARCHAR(30) NOT NULL,
-salasana VARCHAR(44) NOT NULL,
-rooli INT NOT NULL,
-FOREIGN KEY(rooli) REFERENCES Rooli(rooli))
--- Moottorina INNODB
-ENGINE=INNODB;
-
+-- Alun perin tässä oli myös luonti- (siis CREATE TABLE) ja lisäys- eli INSERT INTO-lauseet  Rooli- ja Kayttaja-tauluille, mutta ne poistettiin, koska niitä ei tarvittu.
 -- Lisätään tietoja tietokantaan INSERT INTO-lauseella.
 -- Sanakirja-taulun INSERT INTO-lauseet
 INSERT INTO Sanakirja(nimi, sanakirjan_kuvaus) VALUES ('englanti-suomi-sanakirja', 'Erittäin yksinkertainen englanti-suomi/suomi-englanti-sanakirjan demoversio');
 
 -- Sana-taulun INSERT INTO-lauseet
-INSERT INTO Sana (sanan_nimi_fi, sanan_nimi_en, sanan_kuvaus_fi, sanan_kuvaus_en) VALUES('cat', 'kissa', 'Kissaeläimiin kuuluva eläin.', 'An animal belonging to cat animals.'),
+INSERT INTO Sana (sanan_nimi_fi, sanan_nimi_en, sanan_kuvaus_fi, sanan_kuvaus_en) VALUES('kissa', 'cat', 'Kissaeläimiin kuuluva eläin.', 'An animal belonging to cat animals.'),
 ('tuli', 'fire', 'Palamisprosessi, jonka seurauksena syntyy tuhkaa.', 'A burning process which makes cinder (also known as ashes)).'),
-('water', 'vesi', 'Aine, jolla on neljä olomuotoa: kiinteä, kaasu, höyry ja neste.', 'A subject with four forms: solid, gas, steam and liquid).'),
-('dog', 'koira', 'Candidae-heimoon kuuluva eläin, joka on sukua sudelle.', 'An animal belonging to Candidae Tribe (animals that are relatives of the wolves.');
+('vesi', 'water', 'Aine, jolla on neljä olomuotoa: kiinteä, kaasu, höyry ja neste.', 'A subject with four forms: solid, gas, steam and liquid).'),
+('koira', 'dog', 'Candidae-heimoon kuuluva eläin, joka on sukua sudelle.', 'An animal belonging to Candidae Tribe (animals that are relatives of the wolves.');
 
-INSERT INTO Rooli(Nimi) VALUES ('Peruskäyttäjä'),
-('ylläpitäjä');
- 
--- Kayttajatili-taulun INSERT INTO-lauseet
-INSERT INTO Kayttajatili(kayttajatunnus, salasana, rooli) VALUES ('Anneli96', 'helpposalasana', 1),
-('hannelez2', 'KxfdszZ2aJl>', 2);
--- Rooli-taulun INSERT INTO-lauseet
